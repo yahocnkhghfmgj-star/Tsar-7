@@ -1,9 +1,15 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import time
 import os
+import telebot
+from datetime import datetime
 
+# ============ إعدادات البوت ============
+TOKEN = "8303404858:AAE2wAmDd17zZ7MDoQ-4Gu9DH3zqETaFaUk"  # ⚠️ استبدل هذا بالتوكن الحقيقي
+bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
+# ============ الصفحة الرئيسية ============
 @app.route('/')
 def home():
     return """
@@ -61,42 +67,79 @@ def home():
     <div class="container">
         <div class="success">✅</div>
         <h1>تم حل المشكلة بنجاح!</h1>
-        <p>التطبيق يعمل الآن على Render بدون أخطاء</p>
+        <p>التطبيق + البوت يعملان الآن على Render</p>
         
         <div class="status">
             <p><strong>الحالة:</strong> <span style="color:#4CAF50">نشط ✅</span></p>
             <p><strong>الخادم:</strong> Render Web Service</p>
-            <p><strong>الوقت:</strong> """ + time.strftime("%Y-%m-%d %H:%M:%S") + """</p>
+            <p><strong>الوقت:</strong> """ + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + """</p>
             <p><strong>الذاكرة:</strong> """ + str(os.getpid()) + """</p>
         </div>
         
-        <p>يمكنك الآن إضافة الميزات التي تريدها بدون مشاكل</p>
+        <p>🔗 <a href="/setwebhook" style="color:yellow">اضغط هنا لتفعيل البوت</a></p>
     </div>
 </body>
 </html>
 """
 
+# ============ صفحات المساعدة ============
 @app.route('/health')
 def health():
     return jsonify({
         "status": "healthy",
-        "service": "ali10_1",
+        "service": "tsar-7-3",
         "timestamp": time.time(),
         "message": "✅ النظام يعمل بشكل صحيح"
     })
 
-@app.route('/api/status')
-def api_status():
-    return jsonify({
-        "code": 200,
-        "message": "OK",
-        "data": {
-            "version": "1.0.0",
-            "uptime": time.time(),
-            "environment": "production"
-        }
-    })
+@app.route('/setwebhook')
+def set_webhook():
+    try:
+        webhook_url = f"https://tsar-7-3.onrender.com/{TOKEN}"
+        bot.remove_webhook()
+        bot.set_webhook(url=webhook_url)
+        return f"""
+        <html>
+        <body style="background:green;color:white;text-align:center;padding:100px">
+            <h1>✅ تم ربط المسودة بنجاح!</h1>
+            <p>عنوان الويب هوك: {webhook_url}</p>
+            <p>⏱️ {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+        </body>
+        </html>
+        """
+    except Exception as e:
+        return f"<h1>❌ خطأ: {str(e)}</h1>"
 
+# ============ ويب هوك البوت ============
+@app.route(f'/{TOKEN}', methods=['POST'])
+def telegram_webhook():
+    try:
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return 'OK', 200
+    except Exception as e:
+        print(f"Webhook error: {e}")
+        return 'ERROR', 500
+
+# ============ أوامر البوت ============
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, f"🎉 مرحباً! البوت يعمل على Render\n🔗 الموقع: https://tsar-7-3.onrender.com")
+
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    bot.reply_to(message, f"📨: {message.text}")
+
+# ============ تشغيل التطبيق ============
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
+    
+    # تعيين ويب هوك تلقائياً
+    if TOKEN != "ضع_توكن_البوت_هنا":
+        webhook_url = f"https://tsar-7-3.onrender.com/{TOKEN}"
+        bot.remove_webhook()
+        bot.set_webhook(url=webhook_url)
+        print(f"✅ تم تعيين ويب هوك: {webhook_url}")
+    
     app.run(host='0.0.0.0', port=port, debug=False)
