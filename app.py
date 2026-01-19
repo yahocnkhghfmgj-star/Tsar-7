@@ -6,7 +6,7 @@ from datetime import datetime
 # 🔑 ضع توكن البوت هنا (احصل عليه من @BotFather)
 BOT_TOKEN = "8303404858:AAE2wAmDd17zZ7MDoQ-4Gu9DH3zqETaFaUk"
 # تأكد من اسم تطبيقك في Render
-WEBHOOK_URL = f"https://tsar-7-3.onrender.com/{BOT_TOKEN}"
+WEBHOOK_URL = f"https://tsar-7-5.onrender.com/{BOT_TOKEN}"
 
 # إنشاء البوت والتطبيق
 bot = telebot.TeleBot(BOT_TOKEN)
