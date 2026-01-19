@@ -1,26 +1,6 @@
-# Python
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environments
+*.pyc
+.env
 venv/
 env/
-ENV/
-
-# Environment variables
-.env
-.env.local
-
-# Render
-.render/
-
-# System
 .DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
