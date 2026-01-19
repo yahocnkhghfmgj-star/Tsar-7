@@ -8,7 +8,7 @@ import json
 BOT_TOKEN = "8303404858:AAEuChfUBXoZtvb1dek9oIU7_0nByin8Cpo"
 
 # 🔗 Webhook URL ثابت
-WEBHOOK_URL = "https://tsar-7-6.onrender.com"
+WEBHOOK_URL = "https://tsar-7-7.onrender.com
 
 # إنشاء التطبيق والبوت
 bot = telebot.TeleBot(BOT_TOKEN)
@@ -390,7 +390,7 @@ def handle_start(message):
 🎉 أهلاً {message.from_user.first_name}!
 
 ✅ البوت يعمل بنجاح على خادم Render
-🔗 التطبيق: tsar-7-5
+🔗 التطبيق: tsar-7-7
 📅 الوقت: {datetime.now().strftime('%H:%M:%S')}
 👤 معرفك: {message.from_user.id}
 
@@ -421,7 +421,7 @@ def handle_help(message):
 💡 **نصائح:**
 - البوت يعمل 24/7
 - يمكنك إرسال أي نص
-- الصفحة الرئيسية: https://tsar-7-5.onrender.com
+- الصفحة الرئيسية: https://tsar-7-7.onrender.com
 """
     bot.reply_to(message, help_text)
 
@@ -438,13 +438,13 @@ def handle_info(message):
 🤖 **البوت:**
 - الحالة: نشط ✅
 - الخادم: Render
-- التطبيق: tsar-7-5
+- التطبيق: tsar-7-7
 - الوقت: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
 🌐 **الروابط:**
-- الصفحة: https://tsar-7-5.onrender.com
-- الاختبار: https://tsar-7-5.onrender.com/test
-- الصحة: https://tsar-7-5.onrender.com/health
+- الصفحة: https://tsar-7-7.onrender.com
+- الاختبار: https://tsar-7-7.onrender.com/test
+- الصحة: https://tsar-7-7.onrender.com/health
 """
     bot.reply_to(message, info_text)
 
@@ -469,7 +469,7 @@ if __name__ == "__main__":
     print("🚀 بدأ تشغيل بوت تليجرام...")
     print(f"🤖 البوت: {BOT_TOKEN[:15]}...")
     print(f"🔗 Webhook: {WEBHOOK_URL}")
-    print(f"🌐 التطبيق: tsar-7-5")
+    print(f"🌐 التطبيق: tsar-7-7")
     print("="*60)
     
     # محاولة تفعيل Webhook تلقائياً
